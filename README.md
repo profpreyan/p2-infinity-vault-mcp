@@ -1,39 +1,31 @@
-# P2 Infinity Vault MCP Server
+# P2 Infinity Vault MCP (HTTP)
 
-Quick MCP server that exposes tools to query the public library at:
-https://p2infinityvault.vercel.app/library.json
+Remote MCP server for the P2 Infinity Vault library.
+
+## Endpoint
+
+After deploy: `https://p2-infinity-vault-mcp.vercel.app/api/mcp`  
+(or whatever Vercel assigns)
 
 ## Tools
 
-- `search_library` — search by name, origin, tags, etc.
-- `get_by_id` — full profile by ID (e.g. CH-097)
-- `list_characters` — list all characters (optional heritage filter)
+- `search_library` — search by name, origin, tags
+- `get_by_id` — full record (e.g. CH-097)
+- `list_characters` — list with optional heritage filter
 
-## Setup
+## Connect
 
-```bash
-npm install
-node index.js
-```
-
-Add to your MCP client config (Claude Desktop, Cursor, etc.):
-
+**Claude / Grok / Cursor (Streamable HTTP):**
 ```json
 {
-  "mcpServers": {
-    "p2-infinity-vault": {
-      "command": "node",
-      "args": ["/path/to/p2-infinity-vault-mcp/index.js"]
-    }
-  }
+  "url": "https://YOUR-DEPLOYMENT.vercel.app/api/mcp"
 }
 ```
 
-## Example
-
-Search for Lena (Germanic woman):
-- tool: search_library
-- query: "Lena" or "Germanic"
-- kind: character
-
-Then get full details with get_by_id "CH-097".
+**stdio clients (via mcp-remote):**
+```json
+{
+  "command": "npx",
+  "args": ["-y", "mcp-remote", "https://YOUR-DEPLOYMENT.vercel.app/api/mcp"]
+}
+```
