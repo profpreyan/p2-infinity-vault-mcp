@@ -5,12 +5,13 @@ const LIBRARY_URL = 'https://p2infinityvault.vercel.app/library.json';
 
 let library: any[] | null = null;
 
-async function loadLibrary() {
+async function loadLibrary(): Promise<any[]> {
   if (library) return library;
   const res = await fetch(LIBRARY_URL, { next: { revalidate: 300 } });
   if (!res.ok) throw new Error('Failed to fetch library.json');
-  library = await res.json();
-  return library;
+  const data = await res.json();
+  library = data;
+  return data;
 }
 
 const handler = createMcpHandler(
